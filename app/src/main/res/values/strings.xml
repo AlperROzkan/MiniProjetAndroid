@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">MiniProjetAndroid</string>
+
+    <string name="filmsLibelle">Films</string>
+    <string name="dateLibelle">Date</string>
+    <string name="genreLibelle">Genre</string>
+    <string name="nombreLibelle">Nombre</string>
+
 </resources>
