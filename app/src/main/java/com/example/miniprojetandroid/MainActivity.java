@@ -3,6 +3,7 @@ package com.example.miniprojetandroid;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -30,7 +31,8 @@ public class MainActivity extends AppCompatActivity {
         spinnerDate = findViewById(R.id.spinnerDate);
         spinnerGenre = findViewById(R.id.spinnerGenre);
         seekBarNombre = findViewById(R.id.seekBarNombre);
-    // ...
+        // ...
+        Log.e("MainActivity 1", "oncreate");
 
 
         // Les listeners
@@ -38,8 +40,10 @@ public class MainActivity extends AppCompatActivity {
         envoyer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent trouverFilms = new Intent(MainActivity.this, ResultActivity.class);
-                //trouverFilms.putExtra("keywords", keywords.getText());
+                Log.e("MainActivity 2", "envoyer listener");
+
+                Intent trouverFilms = new Intent(MainActivity.this, ResultActivity.class)
+                        .putExtra(Intent.EXTRA_TEXT, keywords.getText());
                 startActivity(trouverFilms);
             }
         });
