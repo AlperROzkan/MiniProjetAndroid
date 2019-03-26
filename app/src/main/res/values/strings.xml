@@ -6,4 +6,7 @@
     <string name="genreLibelle">Genre</string>
     <string name="nombreLibelle">Nombre</string>
 
+    <string name="envoyerBouton">Envoyer</string>
+
+    <string name="activityResult">Resultat</string>
 </resources>
