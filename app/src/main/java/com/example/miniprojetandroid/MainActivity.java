@@ -40,10 +40,11 @@ public class MainActivity extends AppCompatActivity {
         envoyer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.e("MainActivity 2", "envoyer listener");
 
                 Intent trouverFilms = new Intent(MainActivity.this, ResultActivity.class)
-                        .putExtra(Intent.EXTRA_TEXT, keywords.getText());
+                        .putExtra(Intent.EXTRA_TEXT, keywords.getText().toString());
+                Log.e("MainActivity 2", keywords.getText().toString());
+
                 startActivity(trouverFilms);
             }
         });
