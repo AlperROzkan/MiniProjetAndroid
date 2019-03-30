@@ -4,21 +4,21 @@ import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import android.view.View;
 import android.widget.LinearLayout;
 
-import com.example.miniprojetandroid.controlleur.Controller;
-import com.example.miniprojetandroid.controlleur.MovieDatabaseAPI;
+import com.google.gson.JsonObject;
+import com.koushikdutta.async.future.FutureCallback;
+import com.koushikdutta.ion.Ion;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
-
-import retrofit2.Retrofit;
 
 public class ResultActivity extends AppCompatActivity {
 
@@ -41,12 +41,16 @@ public class ResultActivity extends AppCompatActivity {
         String valeur = extras.getString(Intent.EXTRA_TEXT);
         test.setText(valeur);
 
-        //Requete
-        // On lance le controlleur pour retrofit
-        Controller controller = new Controller();
-        controller.start();
-
-
+        // Requete
+        Ion.with(this)
+                .load("https://api.themoviedb.org/3/discover/movie?api_key=9085d90557e91e1d3531eab4a3510300")
+                .asJsonObject()
+                .setCallback(new FutureCallback<JsonObject>() {
+                    @Override
+                    public void onCompleted(Exception e, JsonObject result) {
+                        System.out.println(result.getAsJsonArray("results"));
+                    }
+                });
 
 
         /*for(int i = 0; i < films.length; i++) {
