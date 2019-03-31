@@ -1,11 +1,14 @@
 package com.example.miniprojetandroid;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,11 +39,15 @@ public class ResultActivity extends AppCompatActivity {
     private LinearLayout ll;
     private TextView test;
 
+    private static Context context;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_result);
+
+        context = getApplicationContext();
 
         ll = (LinearLayout) findViewById(R.id.lineLay);
         test = findViewById(R.id.test1);
@@ -90,23 +97,19 @@ public class ResultActivity extends AppCompatActivity {
                             ));
                         }
 
-                        // FAIRE DES MODIFS ICI
+                        for(int i = 0; i < mesFilms.size(); i++){
+                            try {
+                                if (!mesFilms.get(i).getPosterPath().equals("null")) new TacheAffiche().execute(new URL(("https://image.tmdb.org/t/p/w500"+mesFilms.get(i).getPosterPath()).replace("\"", "")));
+                            } catch (MalformedURLException e1) {
+                                e1.printStackTrace();
+                            }
+                        }
+
+
                         System.out.println(mesFilms.toString());
                     }
                 });
 
-        /*for(int i = 0; i < films.length; i++) {
-            ImageButton imgBtn = new ImageButton(this);
-            try {
-                imgBtn.setImageDrawable(drawableFromUrl(new URL("https://vignette.wikia.nocookie.net/fwob/images/c/cc/Yuri.png/revision/latest?cb=20180619162817")));
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            imgBtn.setOnClickListener(buttonClick);
-            ll.addView(imgBtn);
-            int idx = ll.indexOfChild(imgBtn);
-            imgBtn.setTag(Integer.toString(idx));
-        }*/
     }
 
 
@@ -129,4 +132,32 @@ public class ResultActivity extends AppCompatActivity {
             (Toast.makeText(v.getContext(), idxStr, Toast.LENGTH_SHORT)).show();
         }
     };
+    public class TacheAffiche extends AsyncTask<URL, Integer, Drawable> {
+        ImageButton imgBtn = new ImageButton(context);
+
+        @Override
+        protected Drawable doInBackground(URL... urls) {
+
+            try {
+                InputStream is = urls[0].openStream();
+                Drawable d = Drawable.createFromStream(is, "src");
+                return d;
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+
+        }
+
+        @Override
+        protected void onPostExecute(Drawable drawable) {
+            imgBtn.setImageDrawable(drawable);
+            imgBtn.setOnClickListener(buttonClick);
+            ll.addView(imgBtn);
+            int idx = ll.indexOfChild(imgBtn);
+            imgBtn.setTag(Integer.toString(idx));
+        }
+    }
 }
