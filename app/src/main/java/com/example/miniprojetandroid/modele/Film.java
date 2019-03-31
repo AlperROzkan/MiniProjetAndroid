@@ -50,6 +50,18 @@ public class Film {
     @Expose
     private String releaseDate;
 
+    public Film(Integer voteCount, Integer id, Double voteAverage, String title, Double popularity, String posterPath, Boolean adult, String overview, String releaseDate) {
+        this.voteCount = voteCount;
+        this.id = id;
+        this.voteAverage = voteAverage;
+        this.title = title;
+        this.popularity = popularity;
+        this.posterPath = posterPath;
+        this.adult = adult;
+        this.overview = overview;
+        this.releaseDate = releaseDate;
+    }
+
     public Integer getVoteCount() {
         return voteCount;
     }
