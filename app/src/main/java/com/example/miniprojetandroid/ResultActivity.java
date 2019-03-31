@@ -5,6 +5,7 @@ import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,6 +27,8 @@ import java.net.URL;
 import java.util.Iterator;
 
 public class ResultActivity extends AppCompatActivity {
+
+    final String api_key = "9085d90557e91e1d3531eab4a3510300";
 
     private AdapteurResult itemsAdapter;
     private String[] films = {"1", "2", "3"};
@@ -49,15 +52,27 @@ public class ResultActivity extends AppCompatActivity {
         // Une liste de films
         Films mesFilms = new Films();
 
-        // Requete pour recuperer les films
+        // Requete pour recuperer les films selon un mot clé précis
         Ion.with(this)
-                .load("https://api.themoviedb.org/3/discover/movie?api_key=9085d90557e91e1d3531eab4a3510300")
+                .load("https://api.themoviedb.org/3/search/movie" +
+                        "?api_key=" + api_key +
+                        "&language=" + extras.getString("langage", "en-US") +
+                        "&query=" + extras.getString("query") +
+                        "&page=" + extras.getString("pages", "1") +
+                        "&include_adult=" + extras.getString("adult", "true"))
                 .asJsonObject()
                 .setCallback(new FutureCallback<JsonObject>() {
                     @Override
                     public void onCompleted(Exception e, JsonObject result) {
                         Iterator<JsonElement> listFilms = result.getAsJsonArray("results").iterator();
                         JsonElement film;
+
+                        Log.e("URL", "https://api.themoviedb.org/3/search/movie" +
+                                "?api_key=" + api_key +
+                                "&language=" + extras.getString("langage", "en-US") +
+                                "&query=" + extras.getString("query") +
+                                "&page=" + extras.getString("pages", "1") +
+                                "&include_adult=" + extras.getString("adult", "true"));
 
                         while (listFilms.hasNext()) {
                             film = listFilms.next();
@@ -66,17 +81,17 @@ public class ResultActivity extends AppCompatActivity {
                                     film.getAsJsonObject().get("vote_count").getAsInt(),
                                     film.getAsJsonObject().get("id").getAsInt(),
                                     film.getAsJsonObject().get("vote_average").getAsDouble(),
-                                    film.getAsJsonObject().get("title").getAsString(),
+                                    film.getAsJsonObject().get("title").toString(),
                                     film.getAsJsonObject().get("popularity").getAsDouble(),
-                                    film.getAsJsonObject().get("poster_path").getAsString(),
+                                    film.getAsJsonObject().get("poster_path").toString(),
                                     film.getAsJsonObject().get("adult").getAsBoolean(),
-                                    film.getAsJsonObject().get("overview").getAsString(),
-                                    film.getAsJsonObject().get("release_date").getAsString()
+                                    film.getAsJsonObject().get("overview").toString(),
+                                    film.getAsJsonObject().get("release_date").toString()
                             ));
                         }
 
-                        // FAIRE DES MODIFS SUR L'ACTIVITE ICI
-
+                        // FAIRE DES MODIFS ICI
+                        System.out.println(mesFilms.toString());
                     }
                 });
 

@@ -9,15 +9,22 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.Spinner;
+import android.widget.Switch;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
     // Les composants utilisés dans l'appli
-    Button envoyer;
-    EditText keywords; // L'input de texte tout en haut, TODO : Trouver un meilleur nom, comprendre ce qu'il fait
+    EditText language;
+    EditText query; // L'input de texte tout en haut, TODO : Trouver un meilleur nom, comprendre ce qu'il fait
+    SeekBar seekBarNombre;
+    Switch adult;
     Spinner spinnerDate;
     Spinner spinnerGenre;
-    SeekBar seekBarNombre;
+    Button envoyer;
+
+    TextView compteur;
+
     // TODO : Ajouter des composants et fonctionalités, dans de nouvelles activités ?
 
     @Override
@@ -26,24 +33,35 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         // On instancie les compsants
-        envoyer = findViewById(R.id.envoyer);
-        keywords = findViewById(R.id.keywords);
+        language = findViewById(R.id.langage);
+        query = findViewById(R.id.query);
+        seekBarNombre = findViewById(R.id.seekBarNombre);
+        adult = findViewById(R.id.adult);
         spinnerDate = findViewById(R.id.spinnerDate);
         spinnerGenre = findViewById(R.id.spinnerGenre);
-        seekBarNombre = findViewById(R.id.seekBarNombre);
-        // ...
-        Log.e("MainActivity 1", "oncreate");
+        envoyer = findViewById(R.id.envoyer);
 
+        compteur = findViewById(R.id.compteur);
+        // ...
 
         // Les listeners
         // Appui sur bouton envoyer, on envoie vers l'activité résultats
         envoyer.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
+                String adultMovie = "false";
+                if (adult.isChecked()) {
+                    adultMovie = "true";
+                    Log.d("Status films adultes", adultMovie);
+                }
+                Log.d("Status films adultes", adultMovie);
 
                 Intent trouverFilms = new Intent(MainActivity.this, ResultActivity.class)
-                        .putExtra(Intent.EXTRA_TEXT, keywords.getText().toString());
-                Log.e("MainActivity 2", keywords.getText().toString());
+                        .putExtra("langage", language.getText().toString())
+                        .putExtra("query", query.getText().toString())
+                        .putExtra("pages", seekBarNombre.getProgress())
+                        .putExtra("adult", adultMovie);
 
                 startActivity(trouverFilms);
             }

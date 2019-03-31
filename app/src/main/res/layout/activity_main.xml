@@ -15,107 +15,175 @@
         android:layout_marginEnd="8dp"
         android:text="@string/filmsLibelle"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/keywords"
+        android:id="@+id/query"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="36dp"
         android:layout_marginEnd="8dp"
         android:ems="10"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/filmLibelle" />
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/langage" />
 
     <TextView
         android:id="@+id/dateLibelle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/dateLibelle"
-        tools:layout_editor_absoluteX="109dp"
-        tools:layout_editor_absoluteY="151dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintEnd_toStartOf="@+id/spinnerDate"
-        app:layout_constraintTop_toBottomOf="@+id/keywords"
-        app:layout_constraintBottom_toTopOf="@+id/genreLibelle" />
-
-    <Spinner
-        android:id="@+id/spinnerDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:layout_editor_absoluteX="251dp"
-        tools:layout_editor_absoluteY="146dp"
-        app:layout_constraintStart_toEndOf="@+id/dateLibelle"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/keywords"
-        app:layout_constraintBottom_toTopOf="@+id/spinnerGenre" />
-
-    <TextView
-        android:id="@+id/genreLibelle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/genreLibelle"
-        tools:layout_editor_absoluteX="106dp"
-        tools:layout_editor_absoluteY="560dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintEnd_toStartOf="@+id/spinnerGenre"
-        app:layout_constraintTop_toBottomOf="@+id/dateLibelle"
-        app:layout_constraintBottom_toTopOf="@+id/textView4" />
-
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/nombreLibelle"
-        tools:layout_editor_absoluteX="104dp"
-        tools:layout_editor_absoluteY="646dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintEnd_toStartOf="@+id/seekBarNombre"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/genreLibelle" />
-
-    <Spinner
-        android:id="@+id/spinnerGenre"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        tools:layout_editor_absoluteX="254dp"
-        tools:layout_editor_absoluteY="559dp"
-        app:layout_constraintStart_toEndOf="@+id/genreLibelle"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinnerDate"
-        app:layout_constraintBottom_toTopOf="@+id/seekBarNombre" />
-
-    <SeekBar
-        android:id="@+id/seekBarNombre"
-        android:layout_width="189dp"
-        android:layout_height="31dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/textView4"
-        app:layout_constraintTop_toBottomOf="@+id/spinnerGenre" />
-
-    <Button
-        android:id="@+id/envoyer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
+        android:text="@string/dateLibelle"
+        app:layout_constraintBottom_toTopOf="@+id/genreLibelle"
+        app:layout_constraintEnd_toStartOf="@+id/spinnerDate"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/adult" />
+
+    <Spinner
+        android:id="@+id/spinnerDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/spinnerGenre"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/dateLibelle"
+        app:layout_constraintTop_toBottomOf="@+id/adult" />
+
+    <TextView
+        android:id="@+id/genreLibelle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="64dp"
+        android:text="@string/genreLibelle"
+        app:layout_constraintBottom_toTopOf="@+id/envoyer"
+        app:layout_constraintEnd_toStartOf="@+id/spinnerGenre"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="@string/nombreLibelle"
+        app:layout_constraintBaseline_toBaselineOf="@+id/compteur"
+        app:layout_constraintEnd_toStartOf="@+id/seekBarNombre"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Spinner
+        android:id="@+id/spinnerGenre"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="60dp"
+        app:layout_constraintBottom_toTopOf="@+id/envoyer"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/genreLibelle"
+        app:layout_constraintTop_toTopOf="@+id/genreLibelle" />
+
+    <SeekBar
+        android:id="@+id/seekBarNombre"
+        android:layout_width="189dp"
+        android:layout_height="31dp"
+        android:layout_marginTop="56dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:max="20"
+        android:progress="1"
+        app:layout_constraintBottom_toBottomOf="@+id/textView4"
+        app:layout_constraintEnd_toStartOf="@+id/compteur"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/textView4"
+        app:layout_constraintTop_toBottomOf="@+id/query" />
+
+    <Button
+        android:id="@+id/envoyer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="40dp"
         android:text="@string/envoyerBouton"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="@string/queryLibelle"
+        app:layout_constraintBaseline_toBaselineOf="@+id/query"
+        app:layout_constraintEnd_toStartOf="@+id/query"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/langageLibelle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="@string/langageLibelle"
+        app:layout_constraintBaseline_toBaselineOf="@+id/langage"
+        app:layout_constraintEnd_toStartOf="@+id/langage"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <EditText
+        android:id="@+id/langage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="56dp"
+        android:layout_marginEnd="48dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/langageLibelle"
+        app:layout_constraintTop_toBottomOf="@+id/filmLibelle" />
+
+    <TextView
+        android:id="@+id/compteur"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="68dp"
+        android:layout_marginEnd="8dp"
+        android:text="0"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/seekBarNombre"
+        app:layout_constraintTop_toBottomOf="@+id/query" />
+
+    <Switch
+        android:id="@+id/adult"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="64dp"
+        android:layout_marginEnd="8dp"
+        android:text="@string/adultLibelle"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/seekBarNombre" />
 
