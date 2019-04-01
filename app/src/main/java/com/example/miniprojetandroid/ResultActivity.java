@@ -83,34 +83,40 @@ public class ResultActivity extends AppCompatActivity {
                 .setCallback(new FutureCallback<JsonObject>() {
                     @Override
                     public void onCompleted(Exception e, JsonObject result) {
-                        Iterator<JsonElement> listFilms = result.getAsJsonArray("results").iterator();
-                        JsonElement film;
+                        if (result.has("errors") && result.get("errors").getAsString().equals("query must be provided")) {
+                            Toast toast = Toast.makeText(getApplicationContext(), "Aucun resultat sans query !", Toast.LENGTH_SHORT);
+                            toast.show();
 
-                        Log.e("URL", "https://api.themoviedb.org/3/search/movie" +
-                                "?api_key=" + api_key +
-                                "&language=" + extras.getString("langage", "en-US") +
-                                "&query=" + extras.getString("query") +
-                                "&page=" + extras.getInt("pages", 1) +
-                                "&include_adult=" + extras.getString("adult", "true"));
+                        } else {
+                            Iterator<JsonElement> listFilms = result.getAsJsonArray("results").iterator();
+                            JsonElement film;
 
-                        while (listFilms.hasNext()) {
-                            film = listFilms.next();
+                            Log.e("URL", "https://api.themoviedb.org/3/search/movie" +
+                                    "?api_key=" + api_key +
+                                    "&language=" + extras.getString("langage", "en-US") +
+                                    "&query=" + extras.getString("query") +
+                                    "&page=" + extras.getInt("pages", 1) +
+                                    "&include_adult=" + extras.getString("adult", "true"));
 
-                            mesFilms.add(new Film(
-                                    film.getAsJsonObject().get("vote_count").getAsInt(),
-                                    film.getAsJsonObject().get("id").getAsInt(),
-                                    film.getAsJsonObject().get("vote_average").getAsDouble(),
-                                    film.getAsJsonObject().get("title").toString(),
-                                    film.getAsJsonObject().get("popularity").getAsDouble(),
-                                    film.getAsJsonObject().get("poster_path").toString(),
-                                    film.getAsJsonObject().get("adult").getAsBoolean(),
-                                    film.getAsJsonObject().get("overview").toString(),
-                                    film.getAsJsonObject().get("release_date").toString()
-                            ));
+                            while (listFilms.hasNext()) {
+                                film = listFilms.next();
+
+                                mesFilms.add(new Film(
+                                        film.getAsJsonObject().get("vote_count").getAsInt(),
+                                        film.getAsJsonObject().get("id").getAsInt(),
+                                        film.getAsJsonObject().get("vote_average").getAsDouble(),
+                                        film.getAsJsonObject().get("title").toString(),
+                                        film.getAsJsonObject().get("popularity").getAsDouble(),
+                                        film.getAsJsonObject().get("poster_path").toString(),
+                                        film.getAsJsonObject().get("adult").getAsBoolean(),
+                                        film.getAsJsonObject().get("overview").toString(),
+                                        film.getAsJsonObject().get("release_date").toString()
+                                ));
+                            }
+
+                            itemsAdapter.notifyDataSetChanged();
+
                         }
-
-                        itemsAdapter.notifyDataSetChanged();
-
                     }
                 });
 
