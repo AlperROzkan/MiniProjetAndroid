@@ -8,7 +8,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.EditText;
+import android.widget.GridLayout;
+import android.widget.GridView;
+import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,10 +40,11 @@ public class ResultActivity extends AppCompatActivity {
     private AdapteurResult itemsAdapter;
     private String[] films = {"1", "2", "3"};
 
-    private LinearLayout ll;
+    private GridView listView;
     private TextView test;
 
     private static Context context;
+
 
 
     @Override
@@ -49,7 +54,7 @@ public class ResultActivity extends AppCompatActivity {
 
         context = getApplicationContext();
 
-        ll = (LinearLayout) findViewById(R.id.lineLay);
+        listView = (GridView) findViewById(R.id.lineLay);
         test = findViewById(R.id.test1);
 
         Bundle extras = getIntent().getExtras();
@@ -58,6 +63,9 @@ public class ResultActivity extends AppCompatActivity {
 
         // Une liste de films
         Films mesFilms = new Films();
+
+        final AdapteurResult itemsAdapter = new AdapteurResult(this, mesFilms);
+        listView.setAdapter(itemsAdapter);
 
         // Requete pour recuperer les films selon un mot clé précis
         Ion.with(this)
@@ -97,13 +105,7 @@ public class ResultActivity extends AppCompatActivity {
                             ));
                         }
 
-                        for(int i = 0; i < mesFilms.size(); i++){
-                            try {
-                                if (!mesFilms.get(i).getPosterPath().equals("null")) new TacheAffiche().execute(new URL(("https://image.tmdb.org/t/p/w500"+mesFilms.get(i).getPosterPath()).replace("\"", "")));
-                            } catch (MalformedURLException e1) {
-                                e1.printStackTrace();
-                            }
-                        }
+                        itemsAdapter.notifyDataSetChanged();
 
 
                         System.out.println(mesFilms.toString());
@@ -113,51 +115,6 @@ public class ResultActivity extends AppCompatActivity {
     }
 
 
-    public static Drawable drawableFromUrl(URL url) {
-        try {
-            InputStream is = url.openStream();
-            Drawable d = Drawable.createFromStream(is, "src");
-            return d;
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
 
-    View.OnClickListener buttonClick = new View.OnClickListener() {
-        public void onClick(View v) {
-            String idxStr = (String) v.getTag();
-            (Toast.makeText(v.getContext(), idxStr, Toast.LENGTH_SHORT)).show();
-        }
-    };
-    public class TacheAffiche extends AsyncTask<URL, Integer, Drawable> {
-        ImageButton imgBtn = new ImageButton(context);
 
-        @Override
-        protected Drawable doInBackground(URL... urls) {
-
-            try {
-                InputStream is = urls[0].openStream();
-                Drawable d = Drawable.createFromStream(is, "src");
-                return d;
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return null;
-
-        }
-
-        @Override
-        protected void onPostExecute(Drawable drawable) {
-            imgBtn.setImageDrawable(drawable);
-            imgBtn.setOnClickListener(buttonClick);
-            ll.addView(imgBtn);
-            int idx = ll.indexOfChild(imgBtn);
-            imgBtn.setTag(Integer.toString(idx));
-        }
-    }
 }
