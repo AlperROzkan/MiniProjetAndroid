@@ -77,7 +77,7 @@ public class ResultActivity extends AppCompatActivity {
                         "?api_key=" + api_key +
                         "&language=" + extras.getString("langage", "en-US") +
                         "&query=" + extras.getString("query") +
-                        "&page=" + extras.getString("pages", "1") +
+                        "&page=" + extras.getInt("pages", 1) +
                         "&include_adult=" + extras.getString("adult", "true"))
                 .asJsonObject()
                 .setCallback(new FutureCallback<JsonObject>() {
@@ -90,7 +90,7 @@ public class ResultActivity extends AppCompatActivity {
                                 "?api_key=" + api_key +
                                 "&language=" + extras.getString("langage", "en-US") +
                                 "&query=" + extras.getString("query") +
-                                "&page=" + extras.getString("pages", "1") +
+                                "&page=" + extras.getInt("pages", 1) +
                                 "&include_adult=" + extras.getString("adult", "true"));
 
                         while (listFilms.hasNext()) {

@@ -42,10 +42,32 @@ public class MainActivity extends AppCompatActivity {
         envoyer = findViewById(R.id.envoyer);
 
         compteur = findViewById(R.id.compteur);
+        compteur.setText(""+seekBarNombre.getProgress());
         // ...
 
         // Les listeners
         // Appui sur bouton envoyer, on envoie vers l'activité résultats
+
+        seekBarNombre.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                compteur.setText(""+seekBarNombre.getProgress());
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+             }
+                                                 }
+
+
+        );
+
         envoyer.setOnClickListener(new View.OnClickListener() {
 
             @Override
