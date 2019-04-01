@@ -18,7 +18,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="packed"
-        app:srcCompat="?attr/colorAccent" />
+        app:srcCompat="@color/cardview_light_background" />
 
     <TextView
         android:id="@+id/titrePoster"

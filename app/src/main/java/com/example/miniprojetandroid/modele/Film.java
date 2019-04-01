@@ -1,11 +1,12 @@
 
 package com.example.miniprojetandroid.modele;
 
+import java.io.Serializable;
 import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Film {
+public class Film implements Serializable {
 
     @SerializedName("vote_count")
     @Expose

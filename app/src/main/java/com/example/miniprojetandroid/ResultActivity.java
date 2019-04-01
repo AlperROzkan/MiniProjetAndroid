@@ -7,6 +7,7 @@ import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridLayout;
 import android.widget.GridView;
@@ -44,6 +45,7 @@ public class ResultActivity extends AppCompatActivity {
     private TextView test;
 
     private static Context context;
+    private Button retour;
 
 
 
@@ -53,6 +55,8 @@ public class ResultActivity extends AppCompatActivity {
         setContentView(R.layout.activity_result);
 
         context = getApplicationContext();
+
+        retour = findViewById(R.id.retour2);
 
         listView = (GridView) findViewById(R.id.lineLay);
         test = findViewById(R.id.test1);
@@ -107,10 +111,16 @@ public class ResultActivity extends AppCompatActivity {
 
                         itemsAdapter.notifyDataSetChanged();
 
-
-                        System.out.println(mesFilms.toString());
                     }
                 });
+
+        retour.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
     }
 
