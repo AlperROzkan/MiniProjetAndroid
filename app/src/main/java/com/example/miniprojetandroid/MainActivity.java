@@ -22,6 +22,8 @@ import com.google.gson.JsonObject;
 import com.koushikdutta.async.future.FutureCallback;
 import com.koushikdutta.ion.Ion;
 
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -40,6 +42,10 @@ public class MainActivity extends AppCompatActivity {
     Button envoyer;
 
     TextView compteur;
+    String idRecherche;
+
+
+    JsonObject lesGenres;
 
     // TODO : Ajouter des composants et fonctionalités, dans de nouvelles activités ?
 
@@ -59,9 +65,11 @@ public class MainActivity extends AppCompatActivity {
 
         compteur = findViewById(R.id.compteur);
         compteur.setText("" + seekBarNombre.getProgress());
+        lesGenres = new JsonObject();
         // ...
 
         ArrayList<String> genres = new ArrayList<>(); // Pour stocker les genres des films
+
 
         // Requete pour peupler les genres
         Ion.with(this)
@@ -73,6 +81,8 @@ public class MainActivity extends AppCompatActivity {
                         // On parcourt la liste de genres afin de peupler notre array list qui nous servira pour l'affichage
                         Iterator<JsonElement> listGenres = result.getAsJsonArray("genres").iterator();
                         JsonElement genre; // Un genre de la liste que l'on recupere depuis l'api
+
+                        lesGenres = result;
 
                         genres.add("Any");
                         while (listGenres.hasNext()) {
@@ -133,12 +143,19 @@ public class MainActivity extends AppCompatActivity {
                 if (seekBarNombre.getProgress() == 0) {
                     Toast.makeText(MainActivity.this, "Il faut plus de 0 films", Toast.LENGTH_LONG).show();
                 } else {
+                    idRecherche = "Any";
+                    Iterator<JsonElement> genres = lesGenres.getAsJsonArray("genres").iterator();
+                    while(genres.hasNext()) {
+                        JsonElement genre = genres.next();
+                        if (genre.getAsJsonObject().get("name").getAsString().equals(spinnerGenre.getSelectedItem().toString())) idRecherche = genre.getAsJsonObject().get("id").getAsString();
+                    }
+
                     Intent trouverFilms = new Intent(MainActivity.this, ResultActivity.class)
                             .putExtra("langage", language.getText().toString())
                             .putExtra("query", query.getText().toString())
                             .putExtra("nombre", seekBarNombre.getProgress())
                             .putExtra("adult", adultMovie)
-                            .putExtra("genre", spinnerGenre.getSelectedItem().toString());
+                            .putExtra("genre", idRecherche);
                             if(spinnerDate.getSelectedItem().toString() == "Any") trouverFilms.putExtra("date", "");
                             else trouverFilms.putExtra("date", spinnerDate.getSelectedItem().toString());
 
