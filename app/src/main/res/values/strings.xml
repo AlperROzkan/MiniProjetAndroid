@@ -5,11 +5,11 @@
     <string name="dateLibelle">Date</string>
     <string name="genreLibelle">Genre</string>
     <string name="nombreLibelle">Nombre de films</string>
-    <string name="queryLibelle">Query</string>
+    <string name="queryLibelle">Mot-clé</string>
     <string name="langageLibelle">Langage</string>
     <string name="adultLibelle">Film pour adultes ?</string>
 
-    <string name="envoyerBouton">Envoyer</string>
+    <string name="envoyerBouton">Rechercher</string>
 
     <string name="activityResult">Resultat</string>
 </resources>
