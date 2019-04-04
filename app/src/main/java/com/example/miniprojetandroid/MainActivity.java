@@ -76,14 +76,17 @@ public class MainActivity extends AppCompatActivity {
 
                         while (listGenres.hasNext()) {
                             genre = listGenres.next();
-                            genres.add(genre.getAsJsonObject().get("name").getAsString()); // ICI ELIOTT
+                            genres.add(genre.getAsJsonObject().get("name").getAsString());
                         }
+
+                        // Nous ajoutons les genres recuperés au spinner de l'application
+                        ArrayAdapter<String> genreArrayAdapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, genres);
+                        spinnerGenre.setAdapter(genreArrayAdapter);
                     }
                 });
 
-        // Nous ajoutons les genres recuperés au spinner de l'application
-        ArrayAdapter<String> genreArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, genres);
-        spinnerGenre.setAdapter(genreArrayAdapter);
+
+
 
         // Les listeners
         // Appui sur bouton envoyer, on envoie vers l'activité résultats
@@ -117,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
 
                 // Recuperer le genre selectionné
                 Object genre = spinnerGenre.getSelectedItem();
-                Log.e("genre", genre.toString());
+
 
                 if (seekBarNombre.getProgress() == 0) {
                     Toast.makeText(MainActivity.this, "Il faut plus de 0 films", Toast.LENGTH_LONG).show();
