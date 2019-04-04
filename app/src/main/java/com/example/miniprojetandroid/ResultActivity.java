@@ -42,7 +42,6 @@ public class ResultActivity extends AppCompatActivity {
     private String[] films = {"1", "2", "3"};
 
     private GridView listView;
-    private TextView test;
 
     private static Context context;
     private Button retour;
@@ -54,15 +53,12 @@ public class ResultActivity extends AppCompatActivity {
         setContentView(R.layout.activity_result);
 
         context = getApplicationContext();
-
         retour = findViewById(R.id.retour2);
-
         listView = (GridView) findViewById(R.id.lineLay);
-        test = findViewById(R.id.test1);
 
+        // On recupere les valeurs de l'activité d'avant
         Bundle extras = getIntent().getExtras();
-        String valeur = extras.getString(Intent.EXTRA_TEXT);
-        test.setText(valeur);
+
 
         Films mesFilms = new Films(); // Une liste de films
         final int nombreResultats = extras.getInt("nombre"); // Nombre de resultats
@@ -77,7 +73,7 @@ public class ResultActivity extends AppCompatActivity {
                         "?api_key=" + api_key +
                         "&language=" + extras.getString("langage", "en-US") +
                         "&query=" + extras.getString("query") +
-                        /*"&page=" + extras.getInt("pages", 1) +*/
+                        "&year=" + extras.getString("date") +
                         "&include_adult=" + extras.getString("adult", "true"))
                 .asJsonObject()
                 .setCallback(new FutureCallback<JsonObject>() {
@@ -95,7 +91,7 @@ public class ResultActivity extends AppCompatActivity {
                                     "?api_key=" + api_key +
                                     "&language=" + extras.getString("langage", "en-US") +
                                     "&query=" + extras.getString("query") +
-                                    /*"&page=" + extras.getInt("pages", 1) +*/
+                                    "&year=" + extras.getString("date") +
                                     "&include_adult=" + extras.getString("adult", "true"));
 
                             int i = 0;
@@ -113,7 +109,6 @@ public class ResultActivity extends AppCompatActivity {
                                         film.getAsJsonObject().get("overview").toString(),
                                         film.getAsJsonObject().get("release_date").toString()
                                 ));
-                                Log.e("i", i + "");
                                 i++;
                             }
 

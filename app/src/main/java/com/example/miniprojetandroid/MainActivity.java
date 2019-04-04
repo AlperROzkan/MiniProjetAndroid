@@ -81,11 +81,22 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
+        // On remplit les années dans le spinner
+        ArrayList<Integer> annee = new ArrayList<>();
+        for (int i = 2019; i > 1950; i--) {
+            annee.add(i);
+        }
+
+        // Nous ajoutons les genres recuperés au spinner de l'application
+        ArrayAdapter<Integer> yearArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, annee);
+        spinnerDate.setAdapter(yearArrayAdapter);
+
         // Nous ajoutons les genres recuperés au spinner de l'application
         ArrayAdapter<String> genreArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, genres);
         spinnerGenre.setAdapter(genreArrayAdapter);
 
         // Les listeners
+
         // Appui sur bouton envoyer, on envoie vers l'activité résultats
         seekBarNombre.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -116,8 +127,7 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 // Recuperer le genre selectionné
-                Object genre = spinnerGenre.getSelectedItem();
-                Log.e("genre", genre.toString());
+                Log.e("date", spinnerDate.getSelectedItem().toString());
 
                 if (seekBarNombre.getProgress() == 0) {
                     Toast.makeText(MainActivity.this, "Il faut plus de 0 films", Toast.LENGTH_LONG).show();
@@ -126,7 +136,8 @@ public class MainActivity extends AppCompatActivity {
                             .putExtra("langage", language.getText().toString())
                             .putExtra("query", query.getText().toString())
                             .putExtra("nombre", seekBarNombre.getProgress())
-                            .putExtra("adult", adultMovie);
+                            .putExtra("adult", adultMovie)
+                            .putExtra("date", spinnerDate.getSelectedItem().toString());
                     startActivity(trouverFilms);
                 }
 
