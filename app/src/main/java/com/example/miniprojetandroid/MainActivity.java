@@ -11,12 +11,13 @@ import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
     // Les composants utilisés dans l'appli
     EditText language;
-    EditText query; // L'input de texte tout en haut, TODO : Trouver un meilleur nom, comprendre ce qu'il fait
+    EditText query; // L'input de texte tout en haut
     SeekBar seekBarNombre;
     Switch adult;
     Spinner spinnerDate;
@@ -32,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // On instancie les compsants
+        // On instancie les composants
         language = findViewById(R.id.langage);
         query = findViewById(R.id.query);
         seekBarNombre = findViewById(R.id.seekBarNombre);
@@ -42,27 +43,26 @@ public class MainActivity extends AppCompatActivity {
         envoyer = findViewById(R.id.envoyer);
 
         compteur = findViewById(R.id.compteur);
-        compteur.setText(""+seekBarNombre.getProgress());
+        compteur.setText("" + seekBarNombre.getProgress());
         // ...
 
         // Les listeners
         // Appui sur bouton envoyer, on envoie vers l'activité résultats
-
         seekBarNombre.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                compteur.setText(""+seekBarNombre.getProgress());
-            }
+                                                     @Override
+                                                     public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                                                         compteur.setText("" + seekBarNombre.getProgress());
+                                                     }
 
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
+                                                     @Override
+                                                     public void onStartTrackingTouch(SeekBar seekBar) {
 
-            }
+                                                     }
 
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
+                                                     @Override
+                                                     public void onStopTrackingTouch(SeekBar seekBar) {
 
-             }
+                                                     }
                                                  }
 
 
@@ -72,20 +72,25 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
+                // Gerer la demande de films pour adultes
                 String adultMovie = "false";
                 if (adult.isChecked()) {
                     adultMovie = "true";
-                    Log.d("Status films adultes", adultMovie);
                 }
-                Log.d("Status films adultes", adultMovie);
+                Log.d("Nombre de pages", seekBarNombre.getProgress()+"");
 
-                Intent trouverFilms = new Intent(MainActivity.this, ResultActivity.class)
-                        .putExtra("langage", language.getText().toString())
-                        .putExtra("query", query.getText().toString())
-                        .putExtra("pages", seekBarNombre.getProgress())
-                        .putExtra("adult", adultMovie);
+                if(seekBarNombre.getProgress() == 0) {
+                    Toast.makeText(MainActivity.this,"Il faut plus de 0 films",Toast.LENGTH_LONG).show();
+                }
+                else {
+                    Intent trouverFilms = new Intent(MainActivity.this, ResultActivity.class)
+                            .putExtra("langage", language.getText().toString())
+                            .putExtra("query", query.getText().toString())
+                            .putExtra("nombre", seekBarNombre.getProgress())
+                            .putExtra("adult", adultMovie);
+                    startActivity(trouverFilms);
+                }
 
-                startActivity(trouverFilms);
             }
         });
 

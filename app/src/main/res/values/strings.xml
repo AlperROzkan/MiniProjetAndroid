@@ -4,7 +4,7 @@
     <string name="filmsLibelle">Films</string>
     <string name="dateLibelle">Date</string>
     <string name="genreLibelle">Genre</string>
-    <string name="nombreLibelle">Page</string>
+    <string name="nombreLibelle">Nombre de films</string>
     <string name="queryLibelle">Query</string>
     <string name="langageLibelle">Langage</string>
     <string name="adultLibelle">Film pour adultes ?</string>

@@ -48,7 +48,6 @@ public class ResultActivity extends AppCompatActivity {
     private Button retour;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,9 +64,10 @@ public class ResultActivity extends AppCompatActivity {
         String valeur = extras.getString(Intent.EXTRA_TEXT);
         test.setText(valeur);
 
-        // Une liste de films
-        Films mesFilms = new Films();
+        Films mesFilms = new Films(); // Une liste de films
+        final int nombreResultats = extras.getInt("nombre"); // Nombre de resultats
 
+        // On a un adapteur pour afficher les films
         final AdapteurResult itemsAdapter = new AdapteurResult(this, mesFilms);
         listView.setAdapter(itemsAdapter);
 
@@ -77,7 +77,7 @@ public class ResultActivity extends AppCompatActivity {
                         "?api_key=" + api_key +
                         "&language=" + extras.getString("langage", "en-US") +
                         "&query=" + extras.getString("query") +
-                        "&page=" + extras.getInt("pages", 1) +
+                        /*"&page=" + extras.getInt("pages", 1) +*/
                         "&include_adult=" + extras.getString("adult", "true"))
                 .asJsonObject()
                 .setCallback(new FutureCallback<JsonObject>() {
@@ -95,10 +95,11 @@ public class ResultActivity extends AppCompatActivity {
                                     "?api_key=" + api_key +
                                     "&language=" + extras.getString("langage", "en-US") +
                                     "&query=" + extras.getString("query") +
-                                    "&page=" + extras.getInt("pages", 1) +
+                                    /*"&page=" + extras.getInt("pages", 1) +*/
                                     "&include_adult=" + extras.getString("adult", "true"));
 
-                            while (listFilms.hasNext()) {
+                            int i = 0;
+                            while (listFilms.hasNext() && i < nombreResultats) {
                                 film = listFilms.next();
 
                                 mesFilms.add(new Film(
@@ -112,16 +113,16 @@ public class ResultActivity extends AppCompatActivity {
                                         film.getAsJsonObject().get("overview").toString(),
                                         film.getAsJsonObject().get("release_date").toString()
                                 ));
+                                Log.e("i", i + "");
+                                i++;
                             }
 
                             itemsAdapter.notifyDataSetChanged();
-
                         }
                     }
                 });
 
         retour.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View view) {
                 finish();
@@ -129,8 +130,6 @@ public class ResultActivity extends AppCompatActivity {
         });
 
     }
-
-
 
 
 }
