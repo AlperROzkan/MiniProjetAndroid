@@ -74,6 +74,7 @@ public class MainActivity extends AppCompatActivity {
                         Iterator<JsonElement> listGenres = result.getAsJsonArray("genres").iterator();
                         JsonElement genre; // Un genre de la liste que l'on recupere depuis l'api
 
+                        genres.add("Any");
                         while (listGenres.hasNext()) {
                             genre = listGenres.next();
                             genres.add(genre.getAsJsonObject().get("name").getAsString());
@@ -81,17 +82,19 @@ public class MainActivity extends AppCompatActivity {
                         // Nous ajoutons les genres recuperés au spinner de l'application
                         ArrayAdapter<String> genreArrayAdapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_dropdown_item, genres);
                         spinnerGenre.setAdapter(genreArrayAdapter);
+
                     }
                 });
 
         // On remplit les années dans le spinner
-        ArrayList<Integer> annee = new ArrayList<>();
+        ArrayList<String> annee = new ArrayList<>();
+        annee.add("Any");
         for (int i = 2030; i > 1900; i--) {
-            annee.add(i);
+            annee.add(""+i);
         }
 
         // Nous ajoutons les années recuperés au spinner de l'application
-        ArrayAdapter<Integer> yearArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, annee);
+        ArrayAdapter<String> yearArrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, annee);
         spinnerDate.setAdapter(yearArrayAdapter);
 
 
@@ -135,7 +138,10 @@ public class MainActivity extends AppCompatActivity {
                             .putExtra("query", query.getText().toString())
                             .putExtra("nombre", seekBarNombre.getProgress())
                             .putExtra("adult", adultMovie)
-                            .putExtra("date", spinnerDate.getSelectedItem().toString());
+                            .putExtra("genre", spinnerGenre.getSelectedItem().toString());
+                            if(spinnerDate.getSelectedItem().toString() == "Any") trouverFilms.putExtra("date", "");
+                            else trouverFilms.putExtra("date", spinnerDate.getSelectedItem().toString());
+
                     startActivity(trouverFilms);
                 }
 
