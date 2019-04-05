@@ -91,8 +91,8 @@ public class ResultActivity extends AppCompatActivity {
             Ion.with(this)
                     .load("https://api.themoviedb.org/3/search/movie" +
                             "?api_key=" + api_key +
-                            "&language=" + extras.getString("langage", "en-US") +
-                            "&query=" + extras.getString("query") +
+                            "&language=" + extras.getString("langage", "en-US").replace(" ", "%20") +
+                            "&query=" + extras.getString("query").replace(" ", "%20") +
                             "&year=" + extras.getString("date") +
                             "&include_adult=" + extras.getString("adult", "true")+
                             "&page=" + page)
@@ -101,6 +101,14 @@ public class ResultActivity extends AppCompatActivity {
                     .setCallback(new FutureCallback<JsonObject>() {
                         @Override
                         public void onCompleted(Exception e, JsonObject result) {
+                            Log.e("URL", "https://api.themoviedb.org/3/search/movie" +
+                                    "?api_key=" + api_key +
+                                    "&language=" + extras.getString("langage", "en-US").replace(" ", "%20") +
+                                    "&query=" + extras.getString("query").replace(" ", "%20") +
+                                    "&year=" + extras.getString("date") +
+                                    "&include_adult=" + extras.getString("adult", "true")+
+                                    "&page=" + page);
+
                             if (result.has("errors") && result.get("errors").getAsString().equals("query must be provided")) {
                                 Toast toast = Toast.makeText(getApplicationContext(), "Aucun resultat sans query !", Toast.LENGTH_SHORT);
                                 toast.show();
@@ -110,15 +118,6 @@ public class ResultActivity extends AppCompatActivity {
                             } else {
                                 Iterator<JsonElement> listFilms = result.getAsJsonArray("results").iterator();
                                 JsonElement film;
-
-
-                                Log.e("URL", "https://api.themoviedb.org/3/search/movie" +
-                                        "?api_key=" + api_key +
-                                        "&language=" + extras.getString("langage", "en-US") +
-                                        "&query=" + extras.getString("query") +
-                                        "&year=" + extras.getString("date") +
-                                        "&include_adult=" + extras.getString("adult", "true")+
-                                        "&page=" + page);
 
                                 int i = 0;
                                 while (listFilms.hasNext() && i < nombreResultats ) {
@@ -146,10 +145,8 @@ public class ResultActivity extends AppCompatActivity {
                                                 film.getAsJsonObject().get("overview").toString(),
                                                 film.getAsJsonObject().get("release_date").toString()
                                         ));
+                                        i++;
                                     }
-
-
-                                    i++;
                                 }
 
                                 itemsAdapter.notifyDataSetChanged();
@@ -176,8 +173,8 @@ public class ResultActivity extends AppCompatActivity {
                 Ion.with(getApplicationContext())
                         .load("https://api.themoviedb.org/3/search/movie" +
                                 "?api_key=" + api_key +
-                                "&language=" + extras.getString("langage", "en-US") +
-                                "&query=" + extras.getString("query") +
+                                "&language=" + extras.getString("langage", "en-US").replace(" ", "%20") +
+                                "&query=" + extras.getString("query").replace(" ", "%20") +
                                 "&year=" + extras.getString("date") +
                                 "&include_adult=" + extras.getString("adult", "true")+
                                 "&page=" + page)
